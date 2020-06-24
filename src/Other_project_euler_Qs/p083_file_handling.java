@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ProjectEuler_Java;
+package Other_project_euler_Qs;
 
-import static ProjectEuler_Java.p099_file_handling.readFile;
+import static ProjectEuler_Java.p081_file_handling.readFile;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,52 +37,68 @@ import java.util.logging.Logger;
  *
  * @author Prakhar Gandhi
  */
-
-public class p099_file_handling {
-    
-    private final static int MatrixLen=1000;
+public class p083_file_handling {
     public static void main(String[] args) {
-        String filePath="C:\\Users\\HP\\Downloads\\Text Files\\p099_base_exp.txt";
+        String filePath="C:\\Users\\HP\\Downloads\\Text Files\\p083_matrix.txt";
 	String content=null;
         content=readFile(filePath,StandardCharsets.UTF_8); //System.out.println(new p042_file_handling().readFile());
         //System.out.println(content);
         String[] namesArray = content.split("\n");
-        BigInteger[] myArray=new BigInteger[namesArray.length];
-        String[][] gridStr =new String[MatrixLen][2];
-         int maxIndex=-1;
-        BigInteger maxx=BigInteger.ZERO;
-        for(int i=0;i<namesArray.length;i++){
-            gridStr[i]=namesArray[i].split(",");
-            //System.out.println(gridStr[i][0]);
-            //System.out.println(gridStr[i][1]);
-            System.out.println(i);
-            int a=Integer.parseInt(gridStr[i][0]);
-            int b=Integer.parseInt(gridStr[i][1]);
-            //System.out.println(a+" "+b);
-            
-            myArray[i]=BigInteger.valueOf(a).pow(b);
-            
-            if(myArray[i].compareTo(maxx)==1){
-                maxx=myArray[i];
-                maxIndex=(i+1);
+        
+        int [][]GRID=new int[80][80];
+        int k=0;
+        for(int i=0;i<80;i++){
+            String []namesArray1=namesArray[i].split(",");
+            for(int j=0;j<80;j++){
+                GRID[i][j]=Integer.parseInt(namesArray1[j]);
+                //System.out.println(GRID[i][j]);
                 
             }
+            
         }
+        System.out.println(new p083_file_handling().run(GRID));
         
-       
-         System.out.println(maxIndex);
-        //String ans=run(grid);
-       // System.out.println(ans);
-        //System.out.println(namesArray[0]);
-        //List<String> namesList = Arrays.asList(content.split("\n"));
-        //System.out.println(namesList);
+        
+   }
+    private int[][]distance;
+    private static final int INFINITY = Integer.MAX_VALUE / 2;
+    public String run(int [][] GRID) {
+        int h=GRID.length;
+        int w=GRID[0].length;
+        distance =new int[h][w];
+        for(int[] row:distance){
+            Arrays.fill(row,INFINITY);
+        }
+        distance[0][0]=GRID[0][0];
+        for(int i=0;i<w*h;i++){
+            for(int y=0;y<h;y++){
+                for(int x=0;x<w;x++)
+                {
+                    int temp=INFINITY;
+                    temp=Math.min(getDistance(x-1,y), temp);
+                    temp=Math.min(getDistance(x+1,y), temp);
+                    temp=Math.min(getDistance(x,y-1), temp);
+                    temp=Math.min(getDistance(x,y+1), temp);
+                    distance[y][x]=Math.min(GRID[y][x]+temp,
+                            distance[y][x]);
+                }
+            }
+        }
+        return Integer.toString(distance[h-1][w-1]);
+        
+    }
+    private int getDistance(int x,int y){
+        if(y<0 || y>=distance.length || x<0 ||x>=distance[y].length)
+            return INFINITY;
+        else
+            return distance[y][x];
     }
     public static String readFile(String path,Charset encoding){
       byte[] encoded = null;
         try {
             encoded = Files.readAllBytes(Paths.get(path));
         } catch (IOException ex) {
-            Logger.getLogger(p099_file_handling.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(p098_file_handling.class.getName()).log(Level.SEVERE, null, ex);
         }
       return new String(encoded,encoding);
     }

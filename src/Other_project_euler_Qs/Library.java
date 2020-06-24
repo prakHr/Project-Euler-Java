@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ProjectEuler_Java;
+package Other_project_euler_Qs;
 
 /**
  *
@@ -328,9 +328,7 @@ final class Library {
 		return result;
 	}
 	
-        
-	
-	
+       
 }
 // Immutable unlimited precision fraction
 final class Fraction implements Comparable<Fraction> {

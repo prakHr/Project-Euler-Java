@@ -74,7 +74,7 @@ public class p081_file_handling {
         try {
             encoded = Files.readAllBytes(Paths.get(path));
         } catch (IOException ex) {
-            Logger.getLogger(p042_file_handling.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(p081_file_handling.class.getName()).log(Level.SEVERE, null, ex);
         }
       return new String(encoded,encoding);
     }
